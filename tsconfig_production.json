@@ -1,7 +1,7 @@
 {
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
-		"outFile": "build/production/lzutf8.js",
+		"outFile": "build/production/lzutf8-light.js",
 		"sourceMap": false,
 		"removeComments": true
 	},

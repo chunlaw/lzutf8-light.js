@@ -1,4 +1,4 @@
-namespace LZUTF8 {
+namespace LZUTF8_LIGHT {
 	export namespace ArrayTools {
 		export const copyElements = function (source: IndexableCollection<any>, sourceIndex: number, destination: IndexableCollection<any>, destinationIndex: number, count: number) {
 			while (count--)

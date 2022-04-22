@@ -1,4 +1,4 @@
-namespace LZUTF8 {
+namespace LZUTF8_LIGHT {
 	describe("Encodings:", () => {
 		describe("BinaryString", () => {
 			it("Encodes and decodes a simple set of bytes", () => {

@@ -1,4 +1,4 @@
-namespace LZUTF8 {
+namespace LZUTF8_LIGHT {
 	export class Random {
 		static getRandomIntegerInRange(low: number, high: number): number {
 			return low + Math.floor(Math.random() * (high - low));

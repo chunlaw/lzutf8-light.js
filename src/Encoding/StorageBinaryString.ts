@@ -1,4 +1,4 @@
-namespace LZUTF8 {
+namespace LZUTF8_LIGHT {
 	export namespace Encoding {
 		export namespace StorageBinaryString {
 			export const encode = function (input: Uint8Array): string {

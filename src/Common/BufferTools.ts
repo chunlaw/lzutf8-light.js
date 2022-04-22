@@ -1,4 +1,4 @@
-namespace LZUTF8 {
+namespace LZUTF8_LIGHT {
 	export namespace BufferTools {
 		export const convertToUint8ArrayIfNeeded = function (input: any): any {
 			if (typeof Buffer === "function" && Buffer.isBuffer(input))

@@ -1,4 +1,4 @@
-namespace LZUTF8 {
+namespace LZUTF8_LIGHT {
 	export type UncompressedEncoding = "String" | "ByteArray";
 	export type CompressedEncoding = "ByteArray" | "Buffer" | "Base64" | "BinaryString" | "StorageBinaryString";
 	export type DecompressedEncoding = "String" | "ByteArray" | "Buffer";
@@ -43,74 +43,6 @@ namespace LZUTF8 {
 		const decompressedBytes = decompressor.decompressBlock(inputBytes);
 
 		return CompressionCommon.encodeDecompressedBytes(decompressedBytes, options.outputEncoding!);
-	}
-
-	export function compressAsync(input: string | Uint8Array | Buffer, options: CompressionOptions, callback: (result?: Uint8Array | Buffer | string, error?: Error) => void) {
-		if (callback == null)
-			callback = () => { };
-
-		let inputEncoding: UncompressedEncoding;
-
-		try {
-			inputEncoding = CompressionCommon.detectCompressionSourceEncoding(input);
-		}
-		catch (e) {
-			callback(undefined, e);
-			return;
-		}
-
-		options = ObjectTools.override({
-			inputEncoding: inputEncoding,
-			outputEncoding: "ByteArray",
-			useWebWorker: true,
-			blockSize: 65536
-		}, options);
-
-		enqueueImmediate(() => {
-			if (options.useWebWorker && WebWorker.createGlobalWorkerIfNeeded()) {
-				WebWorker.compressAsync(input, options, callback);
-			}
-			else {
-				AsyncCompressor.compressAsync(input, options, callback);
-			}
-		});
-	}
-
-	export function decompressAsync(input: Uint8Array | Buffer | string, options: DecompressionOptions, callback: (result?: string | Uint8Array | Buffer, error?: Error) => void) {
-		if (callback == null)
-			callback = () => { };
-
-		if (input == null) {
-			callback(undefined, new TypeError("decompressAsync: undefined or null input received"));
-			return;
-		}
-
-		options = ObjectTools.override({
-			inputEncoding: "ByteArray",
-			outputEncoding: "String",
-			useWebWorker: true,
-			blockSize: 65536
-		}, options);
-
-		const normalizedInput: Uint8Array | string = BufferTools.convertToUint8ArrayIfNeeded(input);
-
-		EventLoop.enqueueImmediate(() => {
-			if (options.useWebWorker && WebWorker.createGlobalWorkerIfNeeded()) {
-				WebWorker.decompressAsync(normalizedInput, options, callback);
-			}
-			else {
-				AsyncDecompressor.decompressAsync(input, options, callback);
-			}
-		});
-	}
-
-	// Node.js streams
-	export function createCompressionStream(): stream.Transform {
-		return AsyncCompressor.createCompressionStream();
-	}
-
-	export function createDecompressionStream(): stream.Transform {
-		return AsyncDecompressor.createDecompressionStream();
 	}
 
 	// Encodings

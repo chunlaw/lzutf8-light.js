@@ -9,7 +9,7 @@
 			"dom",
 			//"webworker"
 		],
-		"outFile": "build/development/lzutf8.js",
+		"outFile": "build/development/lzutf8-light.js",
 		"watch": false,
 		"sourceMap": true,
 		"removeComments": false,

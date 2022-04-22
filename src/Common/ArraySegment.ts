@@ -1,4 +1,4 @@
-namespace LZUTF8 {
+namespace LZUTF8_LIGHT {
 	export class ArraySegment<T>{
 		constructor(
 			public readonly container: IndexableCollection<T>,

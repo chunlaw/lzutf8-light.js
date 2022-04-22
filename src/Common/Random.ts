@@ -1,4 +1,4 @@
-namespace LZUTF8 {
+namespace LZUTF8_LIGHT {
 	export const getRandomIntegerInRange = function (low: number, high: number) {
 		return low + Math.floor(Math.random() * (high - low));
 	}

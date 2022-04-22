@@ -1,4 +1,4 @@
-namespace LZUTF8 {
+namespace LZUTF8_LIGHT {
 	export class CompressorCustomHashTable implements CompressorHashTable {
 		bucketLocators: Uint32Array;
 		storage: Uint32Array;

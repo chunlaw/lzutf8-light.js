@@ -1,8 +1,8 @@
 path = require("path");
 
 module.exports = function (grunt) {
-	const banner = '/*!\n LZ-UTF8 v<%=pkg.version%>\n\n Copyright (c) 2021, Rotem Dan\n Released under the MIT license.\n\n Build date: <%= grunt.template.today("yyyy-mm-dd") %> \n\n Please report any issue at https://github.com/rotemdan/lzutf8.js/issues\n*/\n';
-	const dummyTypeDeclarations = `declare namespace LZUTF8 {
+	const banner = '/*!\n LZ-UTF8-LIGHT v<%=pkg.version%>\n\n Copyright (c) 2021, Rotem Dan\n Released under the MIT license.\n\n Build date: <%= grunt.template.today("yyyy-mm-dd") %> \n\n Please report any issue at https://github.com/chunlaw/lzutf8-light.js/issues\n*/\n';
+	const dummyTypeDeclarations = `declare namespace LZUTF8_LIGHT {
     type Buffer = any;
 	type Worker = any;
 
@@ -11,7 +11,7 @@ module.exports = function (grunt) {
     }
 }
 
-export = LZUTF8
+export = LZUTF8_LIGHT
 
 `
 	const tsc = 'node node_modules/typescript/lib/tsc';
@@ -53,7 +53,7 @@ export = LZUTF8
 					require: 'expectations'
 				},
 
-				src: ['build/development/lzutf8.js']
+				src: ['build/development/lzutf8-light.js']
 			},
 
 			runInstrumentedTests: {
@@ -67,7 +67,7 @@ export = LZUTF8
 					require: 'expectations'
 				},
 
-				src: ['tests/coverage/instrument/build/development/lzutf8.js']
+				src: ['tests/coverage/instrument/build/development/lzutf8-light.js']
 			}
 		},
 
@@ -78,7 +78,7 @@ export = LZUTF8
 		},
 
 		instrument: {
-			files: 'build/development/lzutf8.js',
+			files: 'build/development/lzutf8-light.js',
 			options: {
 				lazy: true,
 				basePath: 'tests/coverage/instrument/'
@@ -106,8 +106,8 @@ export = LZUTF8
 
 		concat: {
 			addBannerToDevelopmentBuild: {
-				src: ['build/development/lzutf8.js'],
-				dest: 'build/development/lzutf8.js',
+				src: ['build/development/lzutf8-light.js'],
+				dest: 'build/development/lzutf8-light.js',
 
 				options: {
 					banner: banner
@@ -115,8 +115,8 @@ export = LZUTF8
 			},
 
 			addBannerToProductionBuild: {
-				src: ['build/production/lzutf8.js'],
-				dest: 'build/production/lzutf8.js',
+				src: ['build/production/lzutf8-light.js'],
+				dest: 'build/production/lzutf8-light.js',
 
 				options: {
 					banner: banner
@@ -124,8 +124,8 @@ export = LZUTF8
 			},
 
 			addBannerToMinifiedProductionBuild: {
-				src: ['build/production/lzutf8.min.js'],
-				dest: 'build/production/lzutf8.min.js',
+				src: ['build/production/lzutf8-light.min.js'],
+				dest: 'build/production/lzutf8-light.min.js',
 
 				options: {
 					banner: banner
@@ -133,8 +133,8 @@ export = LZUTF8
 			},
 
 			addDummyDeclarationsToDevelopmentDeclarationFile: {
-				src: ['build/development/lzutf8.d.ts'],
-				dest: 'build/development/lzutf8.d.ts',
+				src: ['build/development/lzutf8-light.d.ts'],
+				dest: 'build/development/lzutf8-light.d.ts',
 
 				options: {
 					banner: dummyTypeDeclarations
@@ -142,8 +142,8 @@ export = LZUTF8
 			},
 
 			addDummyDeclarationsToProductionDeclarationFile: {
-				src: ['build/production/lzutf8.d.ts'],
-				dest: 'build/production/lzutf8.d.ts',
+				src: ['build/production/lzutf8-light.d.ts'],
+				dest: 'build/production/lzutf8-light.d.ts',
 
 				options: {
 					banner: dummyTypeDeclarations
@@ -157,7 +157,7 @@ export = LZUTF8
 					preserveComments: true
 				},
 				files: {
-					'build/production/lzutf8.min.js': ['build/production/lzutf8.js']
+					'build/production/lzutf8-light.min.js': ['build/production/lzutf8-light.js']
 				}
 			}
 		},

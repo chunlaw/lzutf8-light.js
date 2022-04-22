@@ -14,7 +14,7 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="
 		crossorigin="anonymous"></script>
 
-	<script id="lzutf8" src="../build/production/lzutf8.js"></script>
+	<script id="lzutf8" src="../build/production/lzutf8-light.js"></script>
 </head>
 
 <body>
@@ -53,20 +53,20 @@
 			//window.Uint8Array = undefined;
 
 			var stringToCompress = $("#inputTextArea").val();
-			var stringLengthAsUTF8 = LZUTF8.encodeUTF8(stringToCompress).length;
+			var stringLengthAsUTF8 = LZUTF8_LIGHT.encodeUTF8(stringToCompress).length;
 
 			//
 			// Compression
-			var timer = new LZUTF8.Timer();
+			var timer = new LZUTF8_LIGHT.Timer();
 			//
-			var compressedBytes = LZUTF8.compress(stringToCompress);
+			var compressedBytes = LZUTF8_LIGHT.compress(stringToCompress);
 			//
 			var compressionTime = timer.getElapsedTime();
 			var megabytesPerSecond = (stringLengthAsUTF8 / 1000000) / (compressionTime / 1000);
 			var compressionRatioPercentage = compressedBytes.length / stringLengthAsUTF8 * 100;
 
 			$("#compressionInfo").text("Compressed " + stringLengthAsUTF8 + " to " + compressedBytes.length + " bytes (" + compressionRatioPercentage.toFixed(1) + "%) in " + compressionTime.toFixed(1) + "ms (" + megabytesPerSecond.toFixed(1) + "MB/s)");
-			var compressedBytesAsDecimalString = LZUTF8.Encoding.DecimalString.encode(compressedBytes);
+			var compressedBytesAsDecimalString = LZUTF8_LIGHT.Encoding.DecimalString.encode(compressedBytes);
 			$("#compressedOutputTextArea").val(compressedBytesAsDecimalString);
 
 
@@ -74,7 +74,7 @@
 			// Decompression
 			timer.restart();
 			//
-			var decompressedString = LZUTF8.decompress(compressedBytes);
+			var decompressedString = LZUTF8_LIGHT.decompress(compressedBytes);
 			//
 			var decompressionTime = timer.getElapsedTime();
 

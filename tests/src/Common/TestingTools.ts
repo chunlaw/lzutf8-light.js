@@ -1,4 +1,4 @@
-namespace LZUTF8 {
+namespace LZUTF8_LIGHT {
 	export function repeatString(str: string, count: number): string {
 		let result = "";
 		for (let i = 0; i < count; i++)

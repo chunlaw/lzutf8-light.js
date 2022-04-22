@@ -1,4 +1,4 @@
-namespace LZUTF8 {
+namespace LZUTF8_LIGHT {
 	export class CompressorSimpleHashTable implements CompressorHashTable {
 		buckets: Array<number[]>;
 		maximumBucketCapacity: number = 64;

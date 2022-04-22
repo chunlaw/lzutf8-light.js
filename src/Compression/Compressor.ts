@@ -1,4 +1,4 @@
-namespace LZUTF8 {
+namespace LZUTF8_LIGHT {
 	export class Compressor {
 		MinimumSequenceLength = 4;
 		MaximumSequenceLength = 31;

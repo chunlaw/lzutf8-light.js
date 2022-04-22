@@ -1,4 +1,4 @@
-namespace LZUTF8 {
+namespace LZUTF8_LIGHT {
 	export namespace CompressionCommon {
 		export const getCroppedBuffer = function(buffer: Uint8Array, cropStartOffset: number, cropLength: number, additionalCapacity: number = 0): Uint8Array {
 			let croppedBuffer = new Uint8Array(cropLength + additionalCapacity);

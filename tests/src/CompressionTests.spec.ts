@@ -1,4 +1,4 @@
-namespace LZUTF8 {
+namespace LZUTF8_LIGHT {
 	describe("LZ-UTF8:", () => {
 		describe("Test inputs:", () => {
 			const addTestsForInputString = (testStringTitle: string, inputString: string) => {
@@ -190,179 +190,6 @@ namespace LZUTF8 {
 			}
 		});
 
-		describe("Asynchronous operations with different input and output encodings:", () => {
-			const sourceAsString = TestData.hindiText.substr(0, 100);
-			const sourceAsByteArray = encodeUTF8(sourceAsString);
-
-			function addTestForEncodingCombination(testedSourceEncoding: string, testedCompressedEncoding: CompressedEncoding, testedDecompressedEncoding: UncompressedEncoding, webWorkerEnabled?: boolean) {
-				it("Successfuly compresses a " + testedSourceEncoding + " to a " + testedCompressedEncoding + " and decompresses to a " + testedDecompressedEncoding, (done) => {
-					let source: any;
-					if (testedSourceEncoding == "String")
-						source = sourceAsString;
-					else
-						source = sourceAsByteArray;
-
-					compressAsync(source, { outputEncoding: testedCompressedEncoding, useWebWorker: webWorkerEnabled, blockSize: 31 }, (compressedData) => {
-						expect(verifyEncoding(compressedData, testedCompressedEncoding)).toBe(true);
-
-						decompressAsync(compressedData!, { inputEncoding: testedCompressedEncoding, outputEncoding: testedDecompressedEncoding, useWebWorker: webWorkerEnabled, blockSize: 23 }, (decompressedData) => {
-							if (testedDecompressedEncoding == "String")
-								expect(decompressedData).toEqual(sourceAsString);
-							else if (testedDecompressedEncoding == "ByteArray")
-								expect(decompressedData).toEqual(sourceAsByteArray);
-
-							done();
-						});
-					});
-				});
-			}
-
-			// Async tests without web worker
-			describe("Without web worker:", () => {
-				addTestForEncodingCombination("String", "ByteArray", "String", false);
-				addTestForEncodingCombination("String", "ByteArray", "ByteArray", false);
-				addTestForEncodingCombination("String", "BinaryString", "String", false);
-				addTestForEncodingCombination("String", "BinaryString", "ByteArray", false);
-				addTestForEncodingCombination("String", "StorageBinaryString", "String", false);
-				addTestForEncodingCombination("String", "StorageBinaryString", "ByteArray", false);
-				addTestForEncodingCombination("String", "Base64", "String", false);
-				addTestForEncodingCombination("String", "Base64", "ByteArray", false);
-
-				if (runningInNodeJS()) {
-					addTestForEncodingCombination("String", "Buffer", "String", false);
-					addTestForEncodingCombination("String", "Buffer", "ByteArray", false);
-				}
-
-				addTestForEncodingCombination("ByteArray", "ByteArray", "String", false);
-				addTestForEncodingCombination("ByteArray", "ByteArray", "ByteArray", false);
-				addTestForEncodingCombination("ByteArray", "BinaryString", "String", false);
-				addTestForEncodingCombination("ByteArray", "BinaryString", "ByteArray", false);
-				addTestForEncodingCombination("ByteArray", "StorageBinaryString", "String", false);
-				addTestForEncodingCombination("ByteArray", "StorageBinaryString", "ByteArray", false);
-				addTestForEncodingCombination("ByteArray", "Base64", "String", false);
-				addTestForEncodingCombination("ByteArray", "Base64", "ByteArray", false);
-
-				if (runningInNodeJS()) {
-					addTestForEncodingCombination("ByteArray", "Buffer", "String", false);
-					addTestForEncodingCombination("ByteArray", "Buffer", "ByteArray", false);
-				}
-			});
-
-			describe("With web worker (if supported):", () => {
-				addTestForEncodingCombination("String", "ByteArray", "String", true);
-				addTestForEncodingCombination("String", "ByteArray", "ByteArray", true);
-				addTestForEncodingCombination("String", "BinaryString", "String", true);
-				addTestForEncodingCombination("String", "BinaryString", "ByteArray", true);
-				addTestForEncodingCombination("String", "StorageBinaryString", "String", true);
-				addTestForEncodingCombination("String", "StorageBinaryString", "ByteArray", true);
-				addTestForEncodingCombination("String", "Base64", "String", true);
-				addTestForEncodingCombination("String", "Base64", "ByteArray", true);
-
-				addTestForEncodingCombination("ByteArray", "ByteArray", "String", true);
-				addTestForEncodingCombination("ByteArray", "ByteArray", "ByteArray", true);
-				addTestForEncodingCombination("ByteArray", "BinaryString", "String", true);
-				addTestForEncodingCombination("ByteArray", "BinaryString", "ByteArray", true);
-				addTestForEncodingCombination("ByteArray", "StorageBinaryString", "String", true);
-				addTestForEncodingCombination("ByteArray", "StorageBinaryString", "ByteArray", true);
-				addTestForEncodingCombination("ByteArray", "Base64", "String", true);
-				addTestForEncodingCombination("ByteArray", "Base64", "ByteArray", true);
-			});
-
-			describe("With automatic setting for web worker:", () => {
-				addTestForEncodingCombination("String", "ByteArray", "String", undefined);
-				addTestForEncodingCombination("String", "ByteArray", "ByteArray", undefined);
-				addTestForEncodingCombination("String", "BinaryString", "String", undefined);
-				addTestForEncodingCombination("String", "BinaryString", "ByteArray", undefined);
-				addTestForEncodingCombination("String", "StorageBinaryString", "String", undefined);
-				addTestForEncodingCombination("String", "StorageBinaryString", "ByteArray", undefined);
-				addTestForEncodingCombination("String", "Base64", "String", undefined);
-				addTestForEncodingCombination("String", "Base64", "ByteArray", undefined);
-
-				if (runningInNodeJS()) {
-					addTestForEncodingCombination("String", "Buffer", "String", undefined);
-					addTestForEncodingCombination("String", "Buffer", "ByteArray", undefined);
-				}
-
-				addTestForEncodingCombination("ByteArray", "ByteArray", "String", undefined);
-				addTestForEncodingCombination("ByteArray", "ByteArray", "ByteArray", undefined);
-				addTestForEncodingCombination("ByteArray", "BinaryString", "String", undefined);
-				addTestForEncodingCombination("ByteArray", "BinaryString", "ByteArray", undefined);
-				addTestForEncodingCombination("ByteArray", "StorageBinaryString", "String", undefined);
-				addTestForEncodingCombination("ByteArray", "StorageBinaryString", "ByteArray", undefined);
-				addTestForEncodingCombination("ByteArray", "Base64", "String", undefined);
-				addTestForEncodingCombination("ByteArray", "Base64", "ByteArray", undefined);
-
-				if (runningInNodeJS()) {
-					addTestForEncodingCombination("ByteArray", "Buffer", "String", undefined);
-					addTestForEncodingCombination("ByteArray", "Buffer", "ByteArray", undefined);
-				}
-			});
-
-			describe("Simultanous async operations:", () => {
-				const randomString1 = Random.getRandomUTF16StringOfLength(1001);
-				const randomString2 = Random.getRandomUTF16StringOfLength(1301);
-
-				it("Successfuly compconstes two async operation started in parallel (without web worker)", (done) => {
-					let firstIsDone = false;
-					let secondIsDone = false;
-
-					compressAsync(randomString1, { blockSize: 221, useWebWorker: false }, (result) => {
-						expect(decompress(result!)).toEqual(randomString1);
-						firstIsDone = true;
-
-						if (secondIsDone)
-							done();
-					});
-
-					compressAsync(randomString2, { blockSize: 321, useWebWorker: false }, (result) => {
-						expect(decompress(result!)).toEqual(randomString2);
-						secondIsDone = true;
-
-						if (firstIsDone)
-							done();
-					});
-				});
-
-				it("Successfuly executes two async operation started in parallel (with web worker if supported)", (done) => {
-					let firstIsDone = false;
-					let secondIsDone = false;
-
-					compressAsync(TestData.chineseText, { useWebWorker: true }, (result) => {
-						expect(decompress(result!)).toEqual(TestData.chineseText);
-						firstIsDone = true;
-
-						if (secondIsDone)
-							done();
-					});
-
-					compressAsync(TestData.loremIpsum, { useWebWorker: true }, (result) => {
-						expect(decompress(result!)).toEqual(TestData.loremIpsum);
-						secondIsDone = true;
-
-						if (firstIsDone)
-							done();
-					});
-				});
-			});
-
-			describe("Async operations with a custom web worker URI", () => {
-				beforeEach(() => {
-					WebWorker.terminate();
-					WebWorker.scriptURI = "../build/development/lzutf8.js";
-				});
-
-				afterEach(() => {
-					WebWorker.terminate();
-					WebWorker.scriptURI = undefined;
-				});
-
-
-				if (WebWorker.createGlobalWorkerIfNeeded()) {
-					addTestForEncodingCombination("ByteArray", "BinaryString", "String", true);
-				}
-			});
-		});
-
 		describe("Error handling:", () => {
 			it("Throws on undefined or null input for synchronous compression and decompression", () => {
 				expect(() => compress(<any> undefined)).toThrow();
@@ -380,71 +207,6 @@ namespace LZUTF8 {
 
 			});
 
-			// Async with web workers
-			it("Invokes callback with error for undefined input in asynchronous compression (with web workers)", (done) => {
-				compressAsync(<any> undefined, { useWebWorker: true }, (result, error) => {
-					expect(result).toBe(undefined);
-					expect(error).toBeDefined();
-					done();
-				});
-			});
-
-			it("Invokes callback with error for invalid input type in asynchronous compression (with web workers)", (done) => {
-				compressAsync(<any> new Date(), { useWebWorker: true }, (result, error) => {
-					expect(result).toBe(undefined);
-					expect(error).toBeDefined();
-					done();
-				});
-			});
-
-			it("Invokes callback with error for undefined input in asynchronous decompression (with web workers)", (done) => {
-				decompressAsync(<any> undefined, { useWebWorker: true }, (result, error) => {
-					expect(result).toBe(undefined);
-					expect(error).toBeDefined();
-					done();
-				});
-			});
-
-			it("Invokes callback with error for invalid input type in asynchronous decompression (with web workers)", (done) => {
-				decompressAsync(<any> new Date(), { inputEncoding: "Base64", useWebWorker: true }, (result, error) => {
-					expect(result).toBe(undefined);
-					expect(error).toBeDefined();
-					done();
-				});
-			});
-
-			// Async without web workers
-			it("Invokes callback with error for undefined input in asynchronous compression (without web workers)", (done) => {
-				compressAsync(<any> undefined, { useWebWorker: false }, (result, error) => {
-					expect(result).toBe(undefined);
-					expect(error).toBeDefined();
-					done();
-				});
-			});
-
-			it("Invokes callback with error for invalid input type in asynchronous compression (without web workers)", (done) => {
-				compressAsync(<any> new Date(), { useWebWorker: false }, (result, error) => {
-					expect(result).toBe(undefined);
-					expect(error).toBeDefined();
-					done();
-				});
-			});
-
-			it("Invokes callback with error for undefined input in asynchronous decompression (without web workers)", (done) => {
-				decompressAsync(<any> undefined, { useWebWorker: false }, (result, error) => {
-					expect(result).toBe(undefined);
-					expect(error).toBeDefined();
-					done();
-				});
-			});
-
-			it("Invokes callback with error for invalid input type in asynchronous decompression (without web workers)", (done) => {
-				decompressAsync(<any> new Date(), { inputEncoding: "Base64", useWebWorker: false }, (result, error) => {
-					expect(result).toBe(undefined);
-					expect(error).toBeDefined();
-					done();
-				});
-			});
 		});
 
 		describe("Trivial cases:", () => {
@@ -480,15 +242,6 @@ namespace LZUTF8 {
 					expect(decodeUTF8(decompressedText)).toEqual(TestData.loremIpsum);
 				});
 
-				it("Automatically converts Buffers to Uint8Arrays (async)", (done) => {
-					compressAsync(new Buffer(TestData.loremIpsum), {}, (compressedText) => {
-						decompressAsync(new Buffer(<any> compressedText), {}, (decompressedText) => {
-							expect(decompressedText).toEqual(TestData.loremIpsum);
-							done();
-						});
-					});
-				});
-
 			}
 		});
 
@@ -507,22 +260,5 @@ namespace LZUTF8 {
 			});
 		});
 
-		if (runningInNodeJS()) {
-			describe("Node.js streams integration:", () => {
-				it("Correctly compresses and decompresses through streams", (done: Function) => {
-					const compressionStream = createCompressionStream();
-					const decompressionStream = createDecompressionStream();
-
-					compressionStream.pipe(decompressionStream);
-					compressionStream.write(TestData.hindiText);
-
-					decompressionStream.on("readable", () => {
-						const result = decompressionStream.read().toString("utf8");
-						expect(result).toEqual(TestData.hindiText);
-						done();
-					});
-				});
-			});
-		}
 	});
 }

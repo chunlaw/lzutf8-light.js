@@ -1,4 +1,4 @@
-namespace LZUTF8 {
+namespace LZUTF8_LIGHT {
 	export namespace EventLoop {
 		const queuedFunctions: Action[] = [];
 		let asyncFlushFunc: Action;

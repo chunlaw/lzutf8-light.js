@@ -1,4 +1,4 @@
-namespace LZUTF8 {
+namespace LZUTF8_LIGHT {
 	export namespace ObjectTools {
 		export const override = function <T extends V, V>(obj: T, newPropertyValues: V): T {
 			return extend(obj, newPropertyValues);

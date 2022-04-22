@@ -1,4 +1,4 @@
-namespace LZUTF8 {
+namespace LZUTF8_LIGHT {
 	export namespace Encoding {
 		export namespace UTF8 {
 			declare const TextEncoder: any;

@@ -1,4 +1,4 @@
-namespace LZUTF8 {
+namespace LZUTF8_LIGHT {
 	export const runningInNodeJS = function () {
 		return ((typeof process === "object") && (typeof process.versions === "object") && (typeof process.versions.node === "string"));
 	}
@@ -94,5 +94,5 @@ namespace LZUTF8 {
 	export const toString = Object.prototype.toString;
 
 	if (commonJSAvailable())
-		module.exports = LZUTF8;
+		module.exports = LZUTF8_LIGHT;
 }
