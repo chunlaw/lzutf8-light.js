@@ -65,26 +65,11 @@ LZ-UTF8-LIGHT, lightweight version forded from [LZ-UTF8](https://github.com/rote
 Node.js:
 
 ```
-npm install lzutf8
+npm install lzutf8-light
 ```
 ```js
-var LZUTF8_LIGHT = require('lzutf8');
+var LZUTF8_LIGHT = require('lzutf8-light');
 ```
-
-Browser:
-```html
-<script id="lzutf8" src="https://cdn.jsdelivr.net/npm/lzutf8/build/production/lzutf8.js"></script>
-```
-or the minified version:
-```html
-<script id="lzutf8" src="https://cdn.jsdelivr.net/npm/lzutf8/build/production/lzutf8.min.js"></script>
-```
-to reference a particular version use the pattern, where `x.x.x` should be replaced with the exact version number (e.g. `0.4.6`):
-```html
-<script id="lzutf8" src="https://unpkg.com/lzutf8@x.x.x/build/production/lzutf8.min.js"></script>
-```
-
-*note: the `id` attribute and its exact value are necessary for the library to make use of web workers.*
 
 ## Type Identifier Strings
 
